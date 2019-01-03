@@ -1,6 +1,20 @@
 ﻿Public Class PersonList
 
+    Private m_intUserID As Integer
+
     Public Event ShowPersonDetails(ByVal PersonID As Integer)
+
+    Public Property UserID() As Integer
+
+        Get
+            Return m_intUserID
+        End Get
+
+        Set(ByVal value As Integer)
+            m_intUserID = value
+        End Set
+
+    End Property
 
     Private Sub PersonList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -24,10 +38,15 @@
 
             For Each CurrentRow As PO_Data_DataSet.tblPersonRow In PersonList_Table.Rows
 
-                Dim objCurrentPerson As New PersonClass(CurrentRow.NameFirst, CurrentRow.NameLast)
-                objCurrentPerson.ID = CurrentRow.Id
+                If CurrentRow.POUserID = m_intUserID Then
 
-                .Items.Add(objCurrentPerson)
+                    Dim objCurrentPerson As New PersonClass(CurrentRow.NameFirst, CurrentRow.NameLast)
+                    objCurrentPerson.ID = CurrentRow.Id
+
+                    .Items.Add(objCurrentPerson)
+                    .DisplayMember = "DisplayName"
+
+                End If
 
             Next
 

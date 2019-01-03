@@ -1,5 +1,7 @@
 ﻿Public Class frmMain
 
+    Private m_intCurrentUserID As Integer
+
     Private WithEvents objPersonList As PersonList
     Private WithEvents objPersonalDetails As PersonalDetails
 
@@ -8,6 +10,8 @@
         'PersonalDetails Object has to be removed before PersonList Is added
 
         objPersonList = New PersonList
+
+        objPersonList.UserID = m_intCurrentUserID
 
         'If objPersonalDetails IsNot Nothing Then
         If pnlMain.Controls.Contains(objPersonalDetails) Then
@@ -103,7 +107,7 @@
 
         Select Case intButtonType
             Case 1
-                If fcAddPerson(1, objPersonalDetails.Person) Then
+                If fcAddPerson(m_intCurrentUserID, objPersonalDetails.Person) Then
 
                     objPersonList = New PersonList
 
@@ -134,7 +138,7 @@
         If objPersonalDetails IsNot Nothing Then
             If objPersonalDetails.AddMode = True Then
 
-                If fcAddPerson(1, objPersonalDetails.Person) Then
+                If fcAddPerson(m_intCurrentUserID, objPersonalDetails.Person) Then
                     MessageBox.Show("Person WAS added successfully")
                     objPersonList = New PersonList
 
@@ -152,7 +156,7 @@
 
             Else
 
-                If fcUpdatePerson(1, objPersonalDetails.Person) Then
+                If fcUpdatePerson(m_intCurrentUserID, objPersonalDetails.Person) Then
                     MessageBox.Show("Person WAS updated successfully.")
                 Else
                     MessageBox.Show("Person WAS NOT updated successfully.")
@@ -160,6 +164,22 @@
 
             End If
         End If
+
+    End Sub
+
+    Public Property CurrentUserID As Integer
+
+        Get
+            Return m_intCurrentUserID
+        End Get
+
+        Set(ByVal value As Integer)
+            m_intCurrentUserID = value
+        End Set
+
+    End Property
+
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
 
     End Sub
 

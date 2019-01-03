@@ -111,4 +111,104 @@ Module GeneralFunctions
 
     End Function
 
+    Public Function fcUserExists(ByVal strUserName As String) As Boolean
+
+        Dim User_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim User_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        User_TableAdapter.Fill(User_Table)
+
+        Dim User_DataView As DataView = User_Table.DefaultView
+        User_DataView.RowFilter = "Name='" & strUserName & "'"
+
+        With User_DataView
+
+            If .Count > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        End With
+
+    End Function
+
+    Public Function fcUserPasswordMatches(ByVal strUserName As String, ByVal strPassword As String) As Boolean
+
+        Dim User_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim User_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        User_TableAdapter.Fill(User_Table)
+
+        Dim User_DataView As DataView = User_Table.DefaultView
+        User_DataView.RowFilter = "Name='" & strUserName & "'"
+
+        With User_DataView
+
+            If .Count > 0 Then
+                If .Table.Rows(0).Item("Password").ToString = strPassword Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                Return False
+            End If
+
+        End With
+
+    End Function
+
+    Public Function fcCreateUser(ByVal strUserName As String, ByVal strPassword As String) As Boolean
+
+        If fcUserExists(strUserName) Then Return False
+
+        Dim CreateUser_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim CreateUser_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        CreateUser_TableAdapter.Fill(CreateUser_Table)
+
+        CreateUser_Table.AddtblPOUserRow(SysName:=strUserName,
+                                         DisplayName:=strUserName,
+                                         Password:=strPassword,
+                                         DateCreated:=Now,
+                                         LastLogin:=Now,
+                                         FailedLogins:=0)
+        CreateUser_TableAdapter.Update(CreateUser_Table)
+
+    End Function
+
+    Public Sub fcUpdateLastLogin(ByVal strUserName As String)
+
+        Dim UpdateUser_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim UpdateUser_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        UpdateUser_TableAdapter.Fill(UpdateUser_Table)
+
+        Dim UpdateUser_DataView As DataView = UpdateUser_Table.DefaultView
+        UpdateUser_DataView.RowFilter = "Name='" & strUserName & "'"
+
+        With UpdateUser_DataView
+            If .Count > 0 Then .Table.Rows(0).Item("LastLogin") = Now
+        End With
+
+    End Sub
+
+    Public Function fcGetUserID(ByVal strUserName As String) As Integer
+
+        Dim User_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim User_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        User_TableAdapter.Fill(User_Table)
+
+        Dim User_DataView As DataView = User_Table.DefaultView
+        User_DataView.RowFilter = "Name='" & strUserName & "'"
+
+        With User_DataView
+
+            If .Count > 0 Then
+                Return CType(.Item(0).Item("ID"), Integer)
+            Else
+                Return -1
+            End If
+
+        End With
+
+    End Function
+
 End Module
