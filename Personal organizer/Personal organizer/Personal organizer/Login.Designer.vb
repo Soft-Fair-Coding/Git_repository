@@ -52,7 +52,7 @@ Partial Class frmLogin
         'lblPassword
         '
         Me.lblPassword.AutoSize = True
-        Me.lblPassword.Location = New System.Drawing.Point(12, 57)
+        Me.lblPassword.Location = New System.Drawing.Point(12, 60)
         Me.lblPassword.Name = "lblPassword"
         Me.lblPassword.Size = New System.Drawing.Size(53, 13)
         Me.lblPassword.TabIndex = 2
@@ -63,21 +63,21 @@ Partial Class frmLogin
         Me.txtUser.Location = New System.Drawing.Point(82, 31)
         Me.txtUser.Name = "txtUser"
         Me.txtUser.ReadOnly = True
-        Me.txtUser.Size = New System.Drawing.Size(100, 20)
+        Me.txtUser.Size = New System.Drawing.Size(140, 20)
         Me.txtUser.TabIndex = 3
         '
         'txtPassword
         '
         Me.txtPassword.Location = New System.Drawing.Point(82, 57)
         Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New System.Drawing.Size(100, 20)
+        Me.txtPassword.Size = New System.Drawing.Size(140, 20)
         Me.txtPassword.TabIndex = 4
         Me.txtPassword.UseSystemPasswordChar = True
         '
         'btnCancel
         '
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Location = New System.Drawing.Point(26, 87)
+        Me.btnCancel.Location = New System.Drawing.Point(66, 83)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 5
@@ -86,7 +86,7 @@ Partial Class frmLogin
         '
         'btnOk
         '
-        Me.btnOk.Location = New System.Drawing.Point(107, 87)
+        Me.btnOk.Location = New System.Drawing.Point(147, 83)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(75, 23)
         Me.btnOk.TabIndex = 6
@@ -99,7 +99,7 @@ Partial Class frmLogin
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancel
-        Me.ClientSize = New System.Drawing.Size(204, 122)
+        Me.ClientSize = New System.Drawing.Size(234, 122)
         Me.Controls.Add(Me.btnOk)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.txtPassword)

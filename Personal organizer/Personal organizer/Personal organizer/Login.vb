@@ -9,10 +9,15 @@
         Dim intButtons As Integer = MessageBoxButtons.OK
         Dim intIcon As Integer = MessageBoxIcon.Warning
 
-        If My.User.IsAuthenticated Then
+        If My.User.IsAuthenticated Then             ' when somebody is logged in windows
 
-            txtUser.Text = My.User.Name
-            If fcUserExists(My.User.Name) Then
+            'txtUser.Text = My.User.Name
+            Dim strCurrentUser As String = Mid(My.User.Name, InStr(My.User.Name, "\") + 1)
+            txtUser.Text = strCurrentUser
+
+            'If fcUserExists(My.User.Name) Then
+            If fcUserExists(strCurrentUser) Then
+
                 'Login
                 txtPassword.Focus()
 
@@ -70,12 +75,13 @@
 
         End If
 
-        If m_blnNewUser = True Then
+        If blnOK_Continue = True Then
 
             Dim objMainForm As New frmMain
-            objMainForm.currentuserid = fcGetUserID(txtUser.Text)           ' ?
+            objMainForm.CurrentUserID = fcGetUserID(txtUser.Text)           ' ?
             objMainForm.Show()
             Me.Dispose()
+
         End If
 
     End Sub
@@ -83,4 +89,5 @@
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         End
     End Sub
+
 End Class

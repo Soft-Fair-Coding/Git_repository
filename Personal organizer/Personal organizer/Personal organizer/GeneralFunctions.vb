@@ -10,7 +10,7 @@ Module GeneralFunctions
         GetPerson_TableAdapter.Fill(GetPerson_Table)
 
         Dim Person_DataView As DataView = GetPerson_Table.DefaultView
-        Person_DataView.RowFilter = "ID=" + PersonID.ToString
+        Person_DataView.RowFilter = "ID=" & PersonID.ToString
 
         With Person_DataView
 
@@ -118,7 +118,7 @@ Module GeneralFunctions
         User_TableAdapter.Fill(User_Table)
 
         Dim User_DataView As DataView = User_Table.DefaultView
-        User_DataView.RowFilter = "Name='" & strUserName & "'"
+        User_DataView.RowFilter = "SysName='" & strUserName & "'"
 
         With User_DataView
 
@@ -134,17 +134,17 @@ Module GeneralFunctions
 
     Public Function fcUserPasswordMatches(ByVal strUserName As String, ByVal strPassword As String) As Boolean
 
-        Dim User_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
-        Dim User_Table As New PO_Data_DataSet.tblPOUser_DataTable
-        User_TableAdapter.Fill(User_Table)
+        Dim UserPasswordMatch_TableAdapter As New PO_Data_DataSetTableAdapters.tblPOUser_TableAdapter
+        Dim UserPasswordMatch_Table As New PO_Data_DataSet.tblPOUser_DataTable
+        UserPasswordMatch_TableAdapter.Fill(UserPasswordMAtch_Table)
 
-        Dim User_DataView As DataView = User_Table.DefaultView
-        User_DataView.RowFilter = "Name='" & strUserName & "'"
+        Dim UserPasswordMatch_DataView As DataView = UserPasswordMatch_Table.DefaultView
+        UserPasswordMatch_DataView.RowFilter = "SysName='" & strUserName & "'"
 
-        With User_DataView
+        With UserPasswordMatch_DataView
 
             If .Count > 0 Then
-                If .Table.Rows(0).Item("Password").ToString = strPassword Then
+                If Trim(.Table.Rows(0).Item("Password").ToString) = strPassword Then
                     Return True
                 Else
                     Return False
@@ -173,6 +173,8 @@ Module GeneralFunctions
                                          FailedLogins:=0)
         CreateUser_TableAdapter.Update(CreateUser_Table)
 
+        If fcUserExists(strUserName:=strUserName) Then Return True Else Return False
+
     End Function
 
     Public Sub fcUpdateLastLogin(ByVal strUserName As String)
@@ -182,7 +184,7 @@ Module GeneralFunctions
         UpdateUser_TableAdapter.Fill(UpdateUser_Table)
 
         Dim UpdateUser_DataView As DataView = UpdateUser_Table.DefaultView
-        UpdateUser_DataView.RowFilter = "Name='" & strUserName & "'"
+        UpdateUser_DataView.RowFilter = "SysName='" & strUserName & "'"
 
         With UpdateUser_DataView
             If .Count > 0 Then .Table.Rows(0).Item("LastLogin") = Now
@@ -197,7 +199,7 @@ Module GeneralFunctions
         User_TableAdapter.Fill(User_Table)
 
         Dim User_DataView As DataView = User_Table.DefaultView
-        User_DataView.RowFilter = "Name='" & strUserName & "'"
+        User_DataView.RowFilter = "SysName='" & strUserName & "'"
 
         With User_DataView
 
