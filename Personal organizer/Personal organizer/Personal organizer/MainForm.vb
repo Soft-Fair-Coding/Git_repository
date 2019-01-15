@@ -117,6 +117,8 @@
                     End If
 
                     pnlMain.Controls.Add(objPersonList)
+                    objPersonList.Update()
+                    objPersonList.Refresh()
                     objPersonList.Dock = DockStyle.Fill
 
                 Else
